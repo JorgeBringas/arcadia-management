@@ -1,0 +1,207 @@
+<div class="container mt-4" style="max-width: 900px; ">
+
+  <div class="mb-4 pb-2 border-bottom border-secondary">
+    <h1 class="h2 text-warning fw-bold">🧪 New Production Batch</h1>
+
+  </div>
+
+
+  <!-- Main Creation Form Context -->
+  <form (submit)="createBatch($event)">
+
+    <div class="row g-4">
+
+      <!-- Primary Core Context Card Block -->
+      <div class="col-md-7">
+        <div class="card bg-dark border-secondary h-100">
+          <div class="card-header border-secondary bg-secondary bg-opacity-10 py-3">
+            <h5 class="mb-0 text-white-50">General Identification  - {{this.batchForm.batchId().value()}}</h5>
+          </div>
+
+          <div class="card-body row">
+
+
+            <div class="col-md-12 p-2">
+              <label class="form-label text-muted small text-uppercase fw-bold">
+                Batch Name / Description
+              </label>
+              <input type="text"
+                     class="form-control bg-dark text-white border-secondary"
+                     autocomplete="off"
+                     [formField]="batchForm.name">
+              @for (error of batchForm.name().errors(); track error) {
+                <div class="form-text text-muted small error-text">{{ error.message }}</div>
+              }
+            </div>
+
+            <div class="col-md-6 p-2">
+              <label class="form-label text-muted small text-uppercase fw-bold">
+                Style
+              </label>
+              <input type="text"
+                     class="form-control bg-dark text-white border-secondary"
+                     autocomplete="off"
+                     [formField]="batchForm.style">
+              @for (error of batchForm.style().errors(); track error) {
+                <div class="form-text text-muted small error-text">{{ error.message }}</div>
+              }
+            </div>
+
+
+
+            <div class="col-md-6 p-2">
+              <label class="form-label text-muted small text-uppercase fw-bold">
+                Honey Variety / Source
+              </label>
+              <input type="text"
+                     class="form-control bg-dark text-white border-secondary"
+                     autocomplete="off"
+                     [formField]="batchForm.honeyType">
+              @for (error of batchForm.honeyType().errors(); track error) {
+                <div class="form-text text-muted small error-text">{{ error.message }}</div>
+              }
+            </div>
+            <div class="col-md-6 p-2">
+              <label class="form-label text-muted small text-uppercase fw-bold">
+                Honey Used (Kg)
+              </label>
+              <input type="number"
+                     class="form-control bg-dark text-white border-secondary"
+                     autocomplete="off"
+                     [formField]="batchForm.honeyWeight">
+              @for (error of batchForm.honeyWeight().errors(); track error) {
+                <div class="form-text text-muted small error-text">{{ error.message }}</div>
+              }
+            </div>
+
+            <div class="col-md-6 p-2">
+              <label class="form-label text-muted small text-uppercase fw-bold">
+                Watter (Liters)
+              </label>
+              <input type="number"
+                     class="form-control bg-dark text-white border-secondary"
+                     autocomplete="off"
+                     [formField]="batchForm.watter">
+              @for (error of batchForm.watter().errors(); track error) {
+                <div class="form-text text-muted small error-text">{{ error.message }}</div>
+              }
+            </div>
+
+            <div class="col-md-6 p-2">
+              <label class="form-label text-muted small text-uppercase fw-bold">
+                Yeast
+              </label>
+              <input type="text"
+                     class="form-control bg-dark text-white border-secondary"
+                     autocomplete="off"
+                     [formField]="batchForm.yeastType">
+              @for (error of batchForm.yeastType().errors(); track error) {
+                <div class="form-text text-muted small error-text">{{ error.message }}</div>
+              }
+            </div>
+            <div class="col-md-6 p-2">
+              <label class="form-label text-muted small text-uppercase fw-bold">
+                Total Must Volume (Liters)
+              </label>
+              <input type="number"
+                     class="form-control bg-dark text-white border-secondary"
+                     autocomplete="off"
+                     [formField]="batchForm.initialVolume">
+              @for (error of batchForm.initialVolume().errors(); track error) {
+                <div class="form-text text-muted small error-text">{{ error.message }}</div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Specific Gravity & Real-time Calculations Card Block -->
+      <div class="col-md-5">
+        <div class="card bg-dark border-secondary h-100">
+          <div class="card-header border-secondary bg-secondary bg-opacity-10 py-3">
+            <h5 class="mb-0 text-white-50">Fermentation Metrics</h5>
+          </div>
+          <div class="card-body d-flex flex-column justify-content-between g-3">
+            <div>
+              <div class="mb-3">
+                <label class="form-label text-muted small text-uppercase fw-bold">
+                  Original Gravity (OG)
+                </label>
+                <input type="number"
+                       class="form-control bg-dark text-white border-secondary"
+                       autocomplete="off"
+                       [formField]="batchForm.originalGravity">
+                @for (error of batchForm.originalGravity().errors(); track error) {
+                  <div class="form-text text-muted small error-text">{{ error.message }}</div>
+                }
+                <div class="form-text text-muted small">
+                  Initial sugar concentration reading from hydrometer.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label text-muted small text-uppercase fw-bold">
+                  Expected Final Gravity (FG)
+                </label>
+                <input type="number"
+                       class="form-control bg-dark text-white border-secondary"
+                       autocomplete="off"
+                       [formField]="batchForm.expectedFinalGravity">
+                @for (error of batchForm.expectedFinalGravity().errors(); track error) {
+                  <div class="form-text text-muted small error-text">{{ error.message }}</div>
+                }
+                <div class="form-text text-muted small">
+                  Target stabilization endpoint
+                </div>
+              </div>
+            </div>
+
+            <!-- Calculated Reactive Workspace KPI Frame -->
+            <div class="p-3 rounded bg-secondary bg-opacity-10 border border-secondary text-center mt-auto">
+                            <span class="text-uppercase text-muted d-block small fw-bold tracking-wider mb-1">
+                              Estimated Potential Content
+                            </span>
+              <h2 class="display-6 fw-bold text-warning mb-0 font-monospace">
+                {{ estimatedAbv() }}% <span class="fs-4">ABV</span>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Full-width Technical Notes Context Area -->
+      <div class="col-12">
+        <div class="card bg-dark border-secondary">
+          <div class="card-body">
+
+            <label class="form-label text-muted small text-uppercase fw-bold">
+              Expected Final Gravity (FG)
+            </label>
+            <textarea rows="3"
+                      class="form-control bg-dark text-white border-secondary"
+                      [formField]="batchForm.initialNotes">
+            </textarea>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Interface Navigation Flow Execution Elements -->
+      <div class="col-12 d-flex justify-content-end gap-3 mb-5">
+        <button type="button" class="btn btn-outline-secondary px-4 fw-bold" [disabled]="isSubmitting()"
+                (click)="cancel()">
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-warning px-5 fw-bold text-dark" [disabled]="isSubmitting()">
+          @if (isSubmitting() || batchForm().invalid()) {
+            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            Initializing System...
+          } @else {
+            <i class="bi bi-droplet-half me-2"></i>Boot Fermentation Phase
+          }
+        </button>
+      </div>
+
+    </div>
+  </form>
+</div>

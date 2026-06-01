@@ -1,0 +1,232 @@
+<div class="container mt-4">
+
+    <div class="mb-3">
+        <button class="btn btn-sm btn-link text-warning p-0 text-decoration-none" (click)="goBack()">
+            <i class="bi bi-arrow-left me-1"></i> Back to Batch Dashboard
+        </button>
+    </div>
+
+    @if (isLoading()) {
+    <div class="text-center my-5">
+        <div class="spinner-border text-warning" role="status"></div>
+        <p class="text-muted mt-2">Loading core production workspace parameters...</p>
+    </div>
+    } @else if (!batch()) {
+    <div class="alert alert-danger border-danger bg-danger bg-opacity-10 text-danger text-center my-5">
+        <i class="bi bi-shield-slash fs-2 d-block mb-2"></i>
+        Target Batch Document reference token <strong>{{ id() }}</strong> could not be located in database indices.
+    </div>
+    } @else {
+
+    <div class="card bg-secondary bg-opacity-10 border-secondary mb-4">
+        <div class="card-body row align-items-center g-3">
+            <div class="col-md-7">
+                <span class="badge bg-danger text-dark fw-bold mb-1 tracking-wider text-uppercase bg-opacity-75">
+                    {{ batch()?.currentStatus }}
+                </span>
+                <h1 class="h2 text-white fw-bold mb-0">{{ batch()?.name }}</h1>
+                <span class="text-muted small font-monospace">System Key ID: {{ batch()?.id }} | Started on {{
+                    batch()?.startDate | date:'mediumDate' }}</span>
+            </div>
+
+            <div class="col-md-5 d-flex gap-3 justify-content-md-end">
+                <div class="p-2 px-3 rounded bg-dark border border-secondary text-center">
+                    <span class="text-uppercase text-muted d-block small fw-bold font-sans">Original Gravity</span>
+                    <span class="fs-5 font-monospace text-info fw-bold">{{ batch()?.densidadInicial }}</span>
+                </div>
+                <div class="p-2 px-3 rounded bg-dark border border-secondary text-center">
+                    <span class="text-uppercase text-muted d-block small fw-bold font-sans">Active Level</span>
+                    <span class="fs-5 font-monospace text-warning fw-bold">{{ realtimeAbv() }}% ABV</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs border-secondary mb-4">
+        <li class="nav-item">
+            <button class="nav-link bg-transparent border-0 text-uppercase small fw-bold px-4"
+                [class.text-warning]="currentTab() === 'fermentation'"
+                [class.border-bottom]="currentTab() === 'fermentation'"
+                [class.border-warning]="currentTab() === 'fermentation'"
+                [class.border-3]="currentTab() === 'fermentation'"
+                (click)="setTab('fermentation')">
+                1. Fermentation Log
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link bg-transparent border-0 text-uppercase small fw-bold px-4"
+                [class.text-warning]="currentTab() === 'maturation'"
+                [class.border-bottom]="currentTab() === 'maturation'"
+                [class.border-warning]="currentTab() === 'maturation'"
+                [class.border-3]="currentTab() === 'maturation'"
+                (click)="setTab('maturation')">
+                2. Maturation / Aging
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link bg-transparent border-0 text-uppercase small fw-bold px-4"
+                [class.text-warning]="currentTab() === 'sat'"
+                [class.border-bottom]="currentTab() === 'sat'"
+                [class.border-warning]="currentTab() === 'sat'"
+                [class.border-3]="currentTab() === 'sat'"
+                (click)="setTab('sat')">
+                3. SAT / Bottling Link
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content text-white">
+        @switch (currentTab()) {
+
+        @case ('fermentation') {
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card bg-dark border-secondary">
+                    <div class="card-header border-secondary bg-secondary bg-opacity-10 py-3">
+                        <h6 class="mb-0 text-white-50">Log Daily Reading</h6>
+                    </div>
+                    <form (submit)="submitLogEntry($event)" class="card-body row g-3">
+                        <div>
+                            <label class="form-label text-muted small text-uppercase fw-bold">Current Specific
+                                Gravity</label>
+                            <input type="number" step="0.001"
+                                class="form-control bg-dark text-info border-secondary font-monospace"
+                                [value]="logGravity()" (input)="updateInput(logGravity, $event, true)">
+                        </div>
+                        <div>
+                            <label class="form-label text-muted small text-uppercase fw-bold">Vessel Temperature
+                                (°C)</label>
+                            <input type="number" step="0.1"
+                                class="form-control bg-dark text-white border-secondary font-monospace"
+                                [value]="logTemp()" (input)="updateInput(logTemp, $event, true)">
+                        </div>
+                        <div>
+                            <label class="form-label text-muted small text-uppercase fw-bold">Visual
+                                Observations</label>
+                            <textarea class="form-control bg-dark text-white border-secondary small" rows="2"
+                                placeholder="e.g., Active bubbling, healthy krausen layer forming..."
+                                (input)="updateInput(logNotes, $event)"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-outline-warning w-100 fw-bold mt-3">
+                            Commit Metric Row
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card bg-dark border-secondary">
+                    <div class="card-header border-secondary bg-secondary bg-opacity-10 py-3">
+                        <h6 class="mb-0 text-white-50">Fermentation Timeline History Entries</h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-dark mb-0 table-hover small">
+                            <thead class="text-uppercase text-muted" style="font-size: 0.75rem;">
+                                <tr>
+                                    <th class="ps-4">Timestamp</th>
+                                    <th>Specific Gravity</th>
+                                    <th>Temperature</th>
+                                    <th>Attenuated Notes Context</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="ps-4 text-muted">05/25/2026 14:00</td>
+                                    <td class="font-monospace text-info fw-bold">{{ batch()?.densidadInicial }}</td>
+                                    <td class="font-monospace">22.0 °C</td>
+                                    <td class="text-muted">Baseline structural entry imported during initial batch
+                                        launch profile.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+
+        @case ('maturation') {
+        <div class="card bg-dark border-secondary">
+            <div class="card-header border-secondary bg-secondary bg-opacity-10 py-3">
+                <h6 class="mb-0 text-white-50">Maturation & Finings Profiling Management Node</h6>
+            </div>
+            <div class="card-body row g-3">
+                <div class="col-md-6">
+                    <label class="form-label text-muted small text-uppercase fw-bold">Racking Transfer Vessel
+                        Clarification Volume (L)</label>
+                    <input type="number" step="0.1" class="form-control bg-dark text-white border-secondary"
+                        placeholder="e.g., 45.5">
+                    <div class="form-text text-muted">Entering volume logs the initial sediment volume variance mermas
+                        metrics.</div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label text-muted small text-uppercase fw-bold">Finings / Additive Treatments
+                        Applied</label>
+                    <input type="text" class="form-control bg-dark text-white border-secondary"
+                        placeholder="e.g., Bentonita, Sparkalloid, Oak spirals">
+                </div>
+                <div class="col-12">
+                    <label class="form-label text-muted small text-uppercase fw-bold">Aging Room Organoleptic Status
+                        Assessment Log</label>
+                    <textarea class="form-control bg-dark text-white border-secondary" rows="3"
+                        placeholder="Describe sample clarity development, bouquet profile stability notes..."></textarea>
+                </div>
+                <div class="col-12 text-end">
+                    <button class="btn btn-warning fw-bold text-dark px-4">Update Aging File Logs</button>
+                </div>
+            </div>
+        </div>
+        }
+
+        @case ('sat') {
+        <div class="card bg-dark border-secondary" style="max-width: 800px; margin: 0 auto;">
+            <div
+                class="card-header border-secondary bg-danger bg-opacity-10 py-3 border-bottom border-danger border-opacity-20">
+                <h6 class="mb-0 text-danger fw-bold text-uppercase tracking-wider">
+                    <i class="bi bi-shield-lock-fill me-2"></i>SAT Fiscal Settlement Calibration Closure
+                </h6>
+            </div>
+            <form (submit)="finalizeFiscalBatch($event)" class="card-body row g-3">
+                <div class="alert alert-warning bg-warning bg-opacity-10 border-warning text-warning small mb-3">
+                    <i class="bi bi-info-circle-fill me-2"></i>
+                    Executing this workflow binds final production volume records to active tax stamps. It generates
+                    immutability locks blocking past metric alterations.
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label text-muted small text-uppercase fw-bold">Total Finished Bottles</label>
+                    <input type="number" class="form-control bg-dark text-white border-secondary fw-bold" required
+                        placeholder="e.g., 58" (input)="updateInput(bottleCount, $event, true)">
+                </div>
+                <div class="col-md-8">
+                    <label class="form-label text-muted small text-uppercase fw-bold">Tax Stamp Batch Classification
+                        Series Token</label>
+                    <input type="text" class="form-control bg-dark text-white border-secondary font-monospace" required
+                        placeholder="e.g., Nn" (input)="updateInput(stampSeries, $event)">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label text-muted small text-uppercase fw-bold">Fiscal Registration Stamp Folio
+                        Start <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control bg-dark text-success border-secondary font-monospace fw-bold"
+                        required placeholder="e.g., 1000254101" (input)="updateInput(stampStart, $event)">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label text-muted small text-uppercase fw-bold">Fiscal Registration Stamp Folio
+                        End <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control bg-dark text-success border-secondary font-monospace fw-bold"
+                        required placeholder="e.g., 1000254160" (input)="updateInput(stampEnd, $event)">
+                </div>
+
+                <div class="col-12 d-flex justify-content-end gap-3 mt-4">
+                    <button type="submit" class="btn btn-danger px-5 fw-bold text-dark">
+                        Freeze Batch Records & Lock Padrón Registry
+                    </button>
+                </div>
+            </form>
+        </div>
+        }
+        }
+    </div>
+    }
+</div>

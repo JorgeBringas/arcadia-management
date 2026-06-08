@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { BatchSummary } from '../../models/batch.model';
 import { BashService } from '../../services/bash-service';
@@ -7,6 +7,7 @@ import { BashService } from '../../services/bash-service';
   selector: 'app-dashboard-component',
   imports: [],
   templateUrl: './dashboard-component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './dashboard-component.css',
 })
 export class DashboardComponent {

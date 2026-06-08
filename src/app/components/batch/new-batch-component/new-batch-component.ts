@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { form, FormField, required } from '@angular/forms/signals';
 
@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
   selector: 'app-new-batch-component',
   imports: [FormField, MatFormFieldModule, MatInputModule],
   templateUrl: './new-batch-component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './new-batch-component.css',
 })
 export class NewBatchComponent {

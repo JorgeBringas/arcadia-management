@@ -19,7 +19,6 @@ import { BatchSummary } from '../models/batch.model';
 export class BashService {
   private firestore = inject(Firestore);
 
-
   getBatchList(searchText: string, status: string): Observable<BatchSummary[]> {
     const collectionRef = collection(this.firestore, 'batches');
     const filters: any[] = [];

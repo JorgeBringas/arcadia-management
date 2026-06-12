@@ -18,13 +18,13 @@
           <label class="form-label text-muted small text-uppercase fw-bold">Search by Name or Code</label>
           <!-- Using standard input listening bound to our Signal handler -->
           <input #searchInput type="text" class="form-control bg-dark text-white border-secondary"
-                 placeholder="e.g., Traditional Dry Mead..." (input)="onSearchChange($event)">
+            placeholder="e.g., Traditional Dry Mead..." (input)="onSearchChange($event)">
         </div>
         <div class="col-md-4">
           <label class="form-label text-muted small text-uppercase fw-bold">Filter by Phase
             (Physical/Fiscal)</label>
           <select #statusSelect class="form-select bg-dark text-white border-secondary"
-                  (change)="onStatusChange($event)">
+            (change)="onStatusChange($event)">
             <option value="">All Statuses</option>
             <option value="Fermentation">Primary Fermentation</option>
             <option value="Maturation">Maturation / Aging</option>
@@ -49,17 +49,17 @@
     <div class="card-body p-0">
       <!-- Modern Conditional Loading Control Flow Block -->
       @if (batches().length == 0) {
-        <div class="text-center my-5">
-          <div class="spinner-border text-warning" role="status">
-            <span class="visually-hidden">Loading server data...</span>
-          </div>
-          <p class="text-muted mt-2 small">Querying Firebase Cloud Functions...</p>
+      <div class="text-center my-5">
+        <div class="spinner-border text-warning" role="status">
+          <span class="visually-hidden">Loading server data...</span>
         </div>
+        <p class="text-muted mt-2 small">Querying Firebase Cloud Functions...</p>
+      </div>
       } @else {
-        <!-- Data Table -->
-        <div class="table-responsive">
-          <table class="table table-dark table-hover mb-0 align-middle">
-            <thead class="table-secondary text-uppercase small" style="font-size: 0.75rem;">
+      <!-- Data Table -->
+      <div class="table-responsive">
+        <table class="table table-dark table-hover mb-0 align-middle">
+          <thead class="table-secondary text-uppercase small" style="font-size: 0.75rem;">
             <tr>
               <th class="ps-4 py-3">Batch Code</th>
               <th class="py-3">Name / Variety</th>
@@ -69,45 +69,45 @@
               <th class="py-3 text-center">ABV %</th>
               <th class="pe-4 py-3 text-end">Actions</th>
             </tr>
-            </thead>
-            <tbody>
+          </thead>
+          <tbody>
             <!-- Modern Loops Optimization -->
-              @for (batch of batches(); track batch.batchId) {
-                <tr>
-                  <td class="ps-4 fw-mono text-warning">{{ batch.batchId }}</td>
-                  <td>
-                    <span class="fw-bold d-block text-white">{{ batch.name }}</span>
-                  </td>
-                  <td>
-                    {{ batch.status }}
-                  </td>
-                  <td class="text-center">
+            @for (batch of batches(); track batch.batchId) {
+            <tr>
+              <td class="ps-4 fw-mono text-warning">{{ batch.batchId }}</td>
+              <td>
+                <span class="fw-bold d-block text-white">{{ batch.name }}</span>
+              </td>
+              <td>
+                {{ batch.status }}
+              </td>
+              <td class="text-center">
 
-                  </td>
-                  <td class="text-center">
+              </td>
+              <td class="text-center">
 
-                  </td>
-                  <td class="text-center fw-bold">
+              </td>
+              <td class="text-center fw-bold">
 
-                  </td>
-                  <td class="pe-4 text-end">
-                    <button class="btn btn-sm btn-outline-warning" (click)="viewBatchDetails(batch.batchId)">
-                      Manage Batch
-                    </button>
-                  </td>
-                </tr>
-              } @empty {
-                <!-- Clean empty array state handled instantly by control flow -->
-                <tr>
-                  <td colspan="7" class="text-center py-5 text-muted">
-                    <i class="bi bi-exclamation-circle d-block fs-3 mb-2"></i>
-                    No batches found matching the selected search criteria.
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        </div>
+              </td>
+              <td class="pe-4 text-end">
+                <button class="btn btn-sm btn-outline-warning" (click)="goToEditBatch()">
+                  Manage Batch x
+                </button>
+              </td>
+            </tr>
+            } @empty {
+            <!-- Clean empty array state handled instantly by control flow -->
+            <tr>
+              <td colspan="7" class="text-center py-5 text-muted">
+                <i class="bi bi-exclamation-circle d-block fs-3 mb-2"></i>
+                No batches found matching the selected search criteria.
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
       }
     </div>
   </div>

@@ -53,4 +53,8 @@ export class DashboardComponent {
   goToNewBatch(): void {
     this.router.navigate(['/batches/new']);
   }
+
+  goToEditBatch(): void {
+    this.router.navigate(['/batches/edit']);
+  }
 }

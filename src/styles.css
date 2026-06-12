@@ -1,8 +1,13 @@
+:root {
+  --text-white: #ffffff;
+}
+
+
+.text-white {
+  color: var(--text-white);
+}
 
 .error-text {
   color: darkred !important;
 }
 
-.component-x{
-
-}

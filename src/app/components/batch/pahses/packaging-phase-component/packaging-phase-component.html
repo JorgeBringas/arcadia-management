@@ -1,0 +1,118 @@
+<div class="row g-4" style="max-width: 900px; margin: 0 auto;">
+
+  <div class="col-12">
+    <div class="card bg-dark border-secondary">
+
+      <div class="card-header border-secondary bg-danger bg-opacity-10 py-3 border-bottom border-danger border-opacity-25 d-flex justify-content-between align-items-center">
+        <h6 class="mb-0 text-danger fw-bold text-uppercase tracking-wider">
+          <i class="bi bi-shield-lock-fill me-2"></i>Cierre de Lote y Asignación de Marbetes (SAT)
+        </h6>
+        <span class="badge bg-danger bg-opacity-20 text-danger border border-danger font-monospace small">Fase Requerida IEPS</span>
+      </div>
+
+      <form class="card-body row g-3" onsubmit="return false;">
+
+        <div class="col-12">
+          <div class="alert alert-warning bg-warning bg-opacity-10 border-warning text-warning small mb-2 d-flex align-items-start">
+            <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i>
+            <div>
+              <strong>Atención Operativa:</strong> Al ejecutar el cierre de envasado, este lote cambiará su estado a <code>Concluded (SAT)</code>. Los datos de volumen y los folios de marbetes se congelarán en Firestore para asegurar el cumplimiento del Padrón de Bebidas Alcohólicas y la declaración MULTIEPS.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 mt-4">
+          <h5 class="text-white-50 h6 text-uppercase tracking-wide border-bottom border-secondary pb-2 mb-3">
+            1. Rendimiento de Embotellado
+          </h5>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label text-muted small text-uppercase fw-bold">Botellas Finales Obtenidas</label>
+          <div class="input-group">
+            <input type="number" class="form-control bg-dark text-white border-secondary font-monospace fw-bold fs-5 text-warning" value="58">
+            <span class="input-group-text bg-secondary bg-opacity-20 text-muted border-secondary">Pzas</span>
+          </div>
+          <div class="form-text text-muted small">Conteo físico real taponado y listo.</div>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label text-muted small text-uppercase fw-bold">Presentación Comercial</label>
+          <select class="form-select bg-dark text-white border-secondary">
+            <option value="750">750 ml (Estándar)</option>
+            <option value="350">350 ml</option>
+            <option value="500">500 ml</option>
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label text-muted small text-uppercase fw-bold">Volumen Final Envasado</label>
+          <div class="input-group">
+            <input type="text" class="form-control bg-dark text-muted border-secondary font-monospace" value="43.5" disabled>
+            <span class="input-group-text bg-secondary bg-opacity-10 text-muted border-secondary">Lts</span>
+          </div>
+          <div class="form-text text-muted small">Cálculo: (58 botellas × 0.75L).</div>
+        </div>
+
+        <div class="col-12 my-3">
+          <div class="p-3 rounded bg-secondary bg-opacity-10 border border-secondary">
+            <span class="text-uppercase text-muted d-block small fw-bold mb-2">Balance de Mermas en Planta</span>
+            <div class="row text-center font-monospace small">
+              <div class="col-4 border-end border-secondary">
+                <span class="text-muted d-block" style="font-size: 0.75rem;">Volumen Inicial</span>
+                <span class="text-info fw-bold">50.0 Litros</span>
+              </div>
+              <div class="col-4 border-end border-secondary">
+                <span class="text-muted d-block" style="font-size: 0.75rem;">Volumen Embotellado</span>
+                <span class="text-success fw-bold">43.5 Litros</span>
+              </div>
+              <div class="col-4">
+                <span class="text-muted d-block" style="font-size: 0.75rem;">Merma (Sedimento/Lías)</span>
+                <span class="text-danger fw-bold">6.5 Litros (13.0%)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 mt-4">
+          <h5 class="text-white-50 h6 text-uppercase tracking-wide border-bottom border-secondary pb-2 mb-3">
+            2. Vinculación de Marbetes Fiscales
+          </h5>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label text-muted small text-uppercase fw-bold">Serie del Marbete</label>
+          <input type="text" class="form-control bg-dark text-white border-secondary font-monospace" value="Nn" placeholder="Ej: Nn, Aa">
+          <div class="form-text text-muted small">Letras impresas en la banda fiscal.</div>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label text-muted small text-uppercase fw-bold">Folio Inicial <span class="text-danger">*</span></label>
+          <input type="text" class="form-control bg-dark text-success border-secondary font-monospace fw-bold" value="1000254101">
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label text-muted small text-uppercase fw-bold">Folio Final <span class="text-danger">*</span></label>
+          <input type="text" class="form-control bg-dark text-success border-secondary font-monospace fw-bold" value="1000254160">
+        </div>
+
+        <div class="col-12">
+          <div class="form-text text-muted small">
+            Nota: El rango cubre un total de 60 marbetes asignados (incluye 2 marbetes de respaldo por errores de etiquetado o rotura).
+          </div>
+        </div>
+
+        <div class="col-12 d-flex justify-content-end gap-3 mt-4 border-top border-secondary pt-3">
+          <button type="button" class="btn btn-outline-secondary px-4 fw-bold">
+            Cancelar
+          </button>
+          <button type="button" class="btn btn-danger px-4 fw-bold text-dark">
+            <i class="bi bi-lock-fill me-2"></i>Congelar Lote y Emitir Marbetes
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+</div>

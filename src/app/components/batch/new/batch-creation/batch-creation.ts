@@ -1,19 +1,17 @@
 import { Component, computed, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { form, FormField, required } from '@angular/forms/signals';
-
-import { BashService } from '../../../services/bash-service';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { BashService } from '../../../../services/bash-service';
 
 @Component({
-  selector: 'app-new-batch-component',
-  imports: [FormField, MatFormFieldModule, MatInputModule],
-  templateUrl: './new-batch-component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './new-batch-component.css',
+  selector: 'app-batch-creation',
+  imports: [FormField],
+  templateUrl: './batch-creation.html',
+  styleUrl: './batch-creation.css',
 })
-export class NewBatchComponent {
+export class BatchCreation {
+
+
   private router = inject(Router);
   private batchService = inject(BashService);
 
@@ -67,12 +65,15 @@ export class NewBatchComponent {
     this.isSubmitting.set(true);
     try {
       await this.batchService.addBatch(this.batchModel());
+      this.router.navigate(['/batches/confirmation'], { state: { batch: this.batchModel() } }).then();
     } catch (e) {
       console.log(e);
+      this.isSubmitting.set(false);
     }
   }
 
   cancel(): void {
     this.router.navigate(['/dashboard']).then();
   }
+
 }

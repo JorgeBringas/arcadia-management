@@ -2,6 +2,10 @@
   --text-white: #ffffff;
 }
 
+.text-muted {
+  --bs-text-opacity: 1;
+  color: var(--text-white) !important;
+}
 
 .text-white {
   color: var(--text-white);
@@ -10,4 +14,3 @@
 .error-text {
   color: darkred !important;
 }
-

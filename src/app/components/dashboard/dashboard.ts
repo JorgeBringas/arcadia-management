@@ -1,16 +1,16 @@
 import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
-import { BatchSummary } from '../../models/batch.model';
 import { BashService } from '../../services/bash-service';
+import { BatchSummary } from '../../models/batch.model';
 
 @Component({
-  selector: 'app-dashboard-component',
+  selector: 'app-dashboard',
   imports: [],
-  templateUrl: './dashboard-component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './dashboard-component.css',
+  templateUrl: './dashboard.html',
+  styleUrl: './dashboard.css',
 })
-export class DashboardComponent {
+export class Dashboard {
+
   private router = inject(Router);
   private batchService = inject(BashService);
 
@@ -54,7 +54,8 @@ export class DashboardComponent {
     this.router.navigate(['/batches/new']);
   }
 
-  goToEditBatch(): void {
-    this.router.navigate(['/batches/edit']);
+  goToManagementBatch(): void {
+    this.router.navigate(['/batches/management']);
   }
+
 }

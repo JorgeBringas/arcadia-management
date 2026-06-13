@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PrimaryPhaseComponent } from './primary-phase-component';
+import { BatchCreation } from './batch-creation';
 
-describe('PrimaryPhaseComponent', () => {
-  let component: PrimaryPhaseComponent;
-  let fixture: ComponentFixture<PrimaryPhaseComponent>;
+describe('BatchCreation', () => {
+  let component: BatchCreation;
+  let fixture: ComponentFixture<BatchCreation>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PrimaryPhaseComponent],
+      imports: [BatchCreation],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PrimaryPhaseComponent);
+    fixture = TestBed.createComponent(BatchCreation);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

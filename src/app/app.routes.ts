@@ -5,37 +5,23 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     loadComponent: () =>
-      import('./components/dashboard-component/dashboard-component').then(
-        (m) => m.DashboardComponent,
+      import('./components/dashboard/dashboard').then(
+        (m) => m.Dashboard,
       ),
   },
   {
     path: 'batches/new',
     loadComponent: () =>
-      import('./components/batch/new-batch-component/new-batch-component').then(
-        (m) => m.NewBatchComponent,
-      ),
-  },
-
-  {
-    path: 'batches/edit',
-    loadComponent: () =>
-      import('./components/batch/edit-batch-component/edit-batch-component').then(
-        (m) => m.EditBatchComponent,
+      import('./components/batch/new/new-batch').then(
+        (m) => m.NewBatch,
       ),
   },
   {
-    path: 'batches/phases/conditioning',
+    path: 'batches/management',
     loadComponent: () =>
-      import('./components/batch/pahses/conditioning-phase-component/conditioning-phase-component').then(
-        (m) => m.ConditioningPhaseComponent,
+      import('./components/batch/management/management').then(
+        (m) => m.Management,      
       ),
-  },
-  {
-    path: 'batches/phases/packaging',
-    loadComponent: () =>
-      import('./components/batch/pahses/packaging-phase-component/packaging-phase-component').then(
-        (m) => m.PackagingPhaseComponent,
-      ),
-  },
+  }, 
 ];
+

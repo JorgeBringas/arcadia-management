@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BatchManagentComponent } from './batch-managent-component';
+import { NewBatch } from './new-batch';
 
-describe('BatchManagentComponent', () => {
-  let component: BatchManagentComponent;
-  let fixture: ComponentFixture<BatchManagentComponent>;
+describe('NewBatch', () => {
+  let component: NewBatch;
+  let fixture: ComponentFixture<NewBatch>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BatchManagentComponent],
+      imports: [NewBatch],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(BatchManagentComponent);
+    fixture = TestBed.createComponent(NewBatch);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

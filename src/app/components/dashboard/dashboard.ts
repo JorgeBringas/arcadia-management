@@ -1,7 +1,7 @@
 import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
-import { BashService } from '../../services/bash-service';
 import { BatchSummary } from '../../models/batch.model';
+import { BatchService } from '../../services/batch-service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,9 +10,8 @@ import { BatchSummary } from '../../models/batch.model';
   styleUrl: './dashboard.css',
 })
 export class Dashboard {
-
   private router = inject(Router);
-  private batchService = inject(BashService);
+  private batchService = inject(BatchService);
 
   // Reactive State UI Filters
   txtSearch = signal<string>('');
@@ -51,11 +50,10 @@ export class Dashboard {
   }
 
   goToNewBatch(): void {
-    this.router.navigate(['/batches/new']);
+    this.router.navigate(['/batches/new']).then();
   }
 
-  goToManagementBatch(): void {
-    this.router.navigate(['/batches/management']);
+  goToManagementBatch(id: string): void {
+    this.router.navigate(['/batches/management/' + id]).then();
   }
-
 }

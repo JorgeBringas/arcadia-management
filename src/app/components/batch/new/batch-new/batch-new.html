@@ -1,0 +1,11 @@
+<div class="container mt-4" style="max-width: 900px; ">
+
+    <div class="mb-4 pb-2 border-bottom border-secondary">
+        <h1 class="h2 text-warning fw-bold">🧪 Nuevo Lote</h1>
+    </div>
+    @if (viewStep() == 1) {
+    <app-batch-creation (confirmation)="showConfirmation($event)"></app-batch-creation>
+    } @else if (viewStep() == 2) {
+    <app-batch-confirmation [batch]="batch()"></app-batch-confirmation>
+    }
+</div>

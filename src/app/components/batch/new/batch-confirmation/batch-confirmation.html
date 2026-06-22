@@ -1,1 +1,68 @@
-<p>batch-confirmation works!</p>
+<div class="container mt-5" style="max-width: 650px;">
+  <div class="card bg-dark border-secondary shadow-lg p-3">
+
+    <div class="card-body text-center">
+      <div class="mb-4">
+        <div class="display-1 text-warning">
+          <i class="bi bi-check-circle-fill"></i>
+        </div>
+      </div>
+
+      <h1 class="h3 fw-bold text-white mb-1">¡Lote Capturado con Éxito!</h1>
+
+      <div
+        class="alert alert-success bg-success bg-opacity-10 border-success border-opacity-25 text-success small my-4 text-start">
+        <i class="bi bi-shield-check-fill me-2 fs-5 float-start"></i>
+        <div>
+          <strong>Registro Exitoso:</strong> Los datos base de la fermentación primaria se han registrado correctamente
+          en
+          Firestore. Los parámetros iniciales de la receta quedan bloqueados para garantizar la trazabilidad ante
+          auditorías del SAT.
+        </div>
+      </div>
+    </div>
+
+    <div class="card bg-secondary bg-opacity-10 border-secondary mx-3 mb-4">
+      <div class="card-header border-secondary bg-transparent py-2">
+        <span
+          class="text-uppercase text-muted small fw-bold tracking-wider font-sans">Parámetros Iniciales del Mosto</span>
+      </div>
+      <div class="card-body p-0">
+        <ul class="list-group list-group-flush bg-transparent small">
+
+          <li class="list-group-item bg-transparent border-secondary d-flex justify-content-between py-3">
+            <span class="text-muted">Nombre del Lote / Variedad:</span>
+            <strong class="text-white">{{ batch().name }}</strong>
+          </li>
+
+          <li class="list-group-item bg-transparent border-secondary d-flex justify-content-between py-3">
+            <span class="text-muted">Volumen Fermentación:</span>
+            <strong class="text-white font-monospace">{{ batch().fermentationVolume }} Litros</strong>
+          </li>
+
+          <li class="list-group-item bg-transparent border-secondary d-flex justify-content-between py-3">
+            <span class="text-muted">Gravedad Inicial Base (OG):</span>
+            <strong class="text-info font-monospace fw-bold">{{ batch().originalGravity }}</strong>
+          </li>
+
+          <li class="list-group-item bg-transparent border-secondary d-flex justify-content-between py-3">
+            <span class="text-muted">Cepa de Levadura Inoculada:</span>
+            <strong class="text-white">{{ batch().yeastType }}</strong>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+
+    <div class="card-footer bg-transparent border-0 d-flex flex-column gap-2 px-3 pb-3">
+      <button type="button" class="btn btn-warning w-100 fw-bold py-2 text-dark">
+        <i class="bi bi-journal-plus me-2"></i>
+        Ir a Bitácora de Fermentación
+      </button>
+      <button type="button" class="btn btn-outline-secondary w-100 fw-bold py-2">
+        Volver al Dashboard General
+      </button>
+    </div>
+
+  </div>
+</div>

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, input, Signal } from '@angular/core';
+import { BatchCreationFormModel } from '../../../../models/batch.model';
 
 @Component({
   selector: 'app-batch-confirmation',
@@ -6,4 +7,8 @@ import { Component } from '@angular/core';
   templateUrl: './batch-confirmation.html',
   styleUrl: './batch-confirmation.css',
 })
-export class BatchConfirmation {}
+export class BatchConfirmation {
+
+  batch = input.required<BatchCreationFormModel>();
+
+}

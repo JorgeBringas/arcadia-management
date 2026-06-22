@@ -1,7 +1,9 @@
-import { Component, computed, inject, signal, ChangeDetectionStrategy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, computed, inject, output, signal } from '@angular/core';
 import { form, FormField, required } from '@angular/forms/signals';
-import { BashService } from '../../../../services/bash-service';
+import { Router } from '@angular/router';
+import { BatchCreationFormModel } from '../../../../models/batch.model';
+import { BatchService } from '../../../../services/batch-service';
+
 
 @Component({
   selector: 'app-batch-creation',
@@ -10,10 +12,11 @@ import { BashService } from '../../../../services/bash-service';
   styleUrl: './batch-creation.css',
 })
 export class BatchCreation {
-
-
   private router = inject(Router);
-  private batchService = inject(BashService);
+  private batchService = inject(BatchService);
+
+  isSubmitting = signal<boolean>(false);
+  confirmation = output<BatchCreationFormModel>();
 
   batchIdValue = () => {
     const date = new Date();
@@ -29,7 +32,7 @@ export class BatchCreation {
     return 'Tradicional ' + this.batchIdValue();
   };
 
-  batchModel = signal({
+  batchModel = signal<BatchCreationFormModel>({
     batchId: this.batchIdValue(),
     style: 'Tradicional',
     name: this.batchNameValue(),
@@ -37,7 +40,7 @@ export class BatchCreation {
     honeyWeight: 0,
     yeastType: 'MD05',
     watter: 0,
-    initialVolume: 0,
+    fermentationVolume: 0,
     originalGravity: 1110,
     expectedFinalGravity: 1020,
     initialNotes: '',
@@ -47,9 +50,6 @@ export class BatchCreation {
     required(schemaPath.batchId, { message: 'Id es requerido' });
     required(schemaPath.name, { message: 'El nombre es requerido' });
   });
-
-  // Status Signals for submission tracking
-  isSubmitting = signal<boolean>(false);
 
   estimatedAbv = computed(() => {
     const batchForm = this.batchModel();
@@ -65,7 +65,7 @@ export class BatchCreation {
     this.isSubmitting.set(true);
     try {
       await this.batchService.addBatch(this.batchModel());
-      this.router.navigate(['/batches/confirmation'], { state: { batch: this.batchModel() } }).then();
+      this.confirmation.emit(this.batchModel());
     } catch (e) {
       console.log(e);
       this.isSubmitting.set(false);
@@ -75,5 +75,4 @@ export class BatchCreation {
   cancel(): void {
     this.router.navigate(['/dashboard']).then();
   }
-
 }

@@ -10,11 +10,11 @@
     <div class="card-body row align-items-center g-3">
       <div class="col-md-7">
         <span class="badge bg-warning text-dark fw-bold mb-2 tracking-wider text-uppercase">
-          Fase: Fermentación
+          Fase: {{ batchManagementModel().status }}
         </span>
-        <h1 class="h3 text-white fw-bold mb-1">Hidromiel Tradicional de Mezquite Seca</h1>
+        <h1 class="h3 text-white fw-bold mb-1">{{ batchManagementModel().name }}</h1>
         <p class="text-white small font-monospace mb-0">
-          ID Lote: BATCH-2026-05 | Inoculación: 31/05/2026 14:00
+          ID Lote: {{ batchManagementModel().batchId }}
         </p>
       </div>
 
@@ -44,36 +44,44 @@
 
   <ul class="nav nav-tabs border-secondary mb-4">
     <li class="nav-item">
-      <button
-        class="nav-link bg-transparent border-0 text-uppercase small fw-bold py-2 px-3 text-warning border-bottom border-warning border-3"
-        type="button">
+      <button (click)="changePahse(1)"
+              [class]="phaseStep()===1
+        ?'nav-link bg-transparent border-0 text-uppercase small fw-bold py-2 px-3 text-warning border-bottom border-warning border-3'
+        :'nav-link bg-transparent border-0 text-uppercase small fw-bold py-2 px-3 text-white-50'"
+              type="button">
         1. Bitácora de Fermentación
       </button>
     </li>
     <li class="nav-item">
-      <button class="nav-link bg-transparent border-0 text-uppercase small fw-bold py-2 px-3 text-white-50"
-        type="button">
+      <button (click)="changePahse(2)"
+              [class]="phaseStep()===2
+        ?'nav-link bg-transparent border-0 text-uppercase small fw-bold py-2 px-3 text-warning border-bottom border-warning border-3'
+        :'nav-link bg-transparent border-0 text-uppercase small fw-bold py-2 px-3 text-white-50'"
+              type="button">
         2. Maduración y Clarificación
       </button>
     </li>
     <li class="nav-item">
-      <button class="nav-link bg-transparent border-0 text-uppercase small fw-bold py-2 px-3 text-white-50"
-        type="button">
+      <button (click)="changePahse(3)"
+              [class]="phaseStep()===3
+        ?'nav-link bg-transparent border-0 text-uppercase small fw-bold py-2 px-3 text-warning border-bottom border-warning border-3'
+        :'nav-link bg-transparent border-0 text-uppercase small fw-bold py-2 px-3 text-white-50'"
+              type="button">
         3. Envasado y Marbetes (SAT)
       </button>
     </li>
   </ul>
 
-  <div class="tab-content text-white">
+  <div class="tab-content text-white pb-5">
 
-
-    <app-primary-phase></app-primary-phase>
-    <!--
-
-     <app-conditioning-phase-component></app-conditioning-phase-component>
-     <app-packaging-phase-component></app-packaging-phase-component>
-    -->
-
+    @if (phaseStep() === 1) {
+      <app-fermentation-phase [batchId]="id()">
+      </app-fermentation-phase>
+    } @else if (phaseStep() === 2) {
+      <app-conditioning-phase [batchId]="id()"></app-conditioning-phase>
+    } @else if (phaseStep() === 3) {
+      <app-packaging-phase></app-packaging-phase>
+    }
 
   </div>
 </div>

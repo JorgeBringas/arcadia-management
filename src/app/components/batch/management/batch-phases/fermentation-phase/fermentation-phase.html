@@ -1,0 +1,79 @@
+<div class="row g-4">
+
+  <div class="col-md-4">
+    <div class="card bg-dark border-secondary">
+      <div class="card-header border-secondary bg-secondary bg-opacity-10 py-3">
+        <h6 class="mb-0 text-white-50 fw-bold"><i class="bi bi-plus-circle me-2"></i>Registrar Lectura Hoy</h6>
+      </div>
+      <form class="card-body row g-3" onsubmit="return false;">
+        <div>
+          <label class="form-label small text-uppercase text-white">Densidad Actual (Densímetro)</label>
+          <input type="number" step="0.001"
+                 class="form-control bg-dark text-info border-secondary font-monospace fs-5 fw-bold"
+                 [formField]="fermentationForm.density"
+          >
+          @for (error of fermentationForm.density().errors(); track error) {
+            <div class="form-text text-muted small error-text">{{ error.message }}</div>
+          }
+        </div>
+        <div>
+          <label class="form-label small text-uppercase text-white">Temperatura del Mosto (°C)</label>
+          <input type="number" step="0.1"
+                 class="form-control bg-dark text-warning border-secondary font-monospace fs-5 fw-bold"
+                 [formField]="fermentationForm.temperature"
+          >
+          @for (error of fermentationForm.temperature().errors(); track error) {
+            <div class="form-text text-muted small error-text">{{ error.message }}</div>
+          }
+        </div>
+        <div>
+          <label class="form-label small text-uppercase text-white">Notas Visuales</label>
+          <textarea class="form-control bg-dark text-white border-secondary small" rows="3"
+                    [formField]="fermentationForm.notes"
+          >
+          </textarea>
+        </div>
+        <button type="button" class="btn btn-outline-warning w-100 fw-bold mt-2"
+                (click)="addFermentationData()"
+                [disabled]="fermentationForm().invalid()">
+          <i class="bi bi-journal-plus me-1"></i>
+          Guardar Lectura Local
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <div class="card bg-dark border-secondary">
+      <div
+        class="card-header border-secondary bg-secondary bg-opacity-10 py-3 d-flex justify-content-between align-items-center">
+        <h6 class="mb-0 text-white-50 fw-bold"><i class="bi bi-clock-history me-2"></i>
+          Historial de Atenuación
+        </h6>
+      </div>
+      <div class="card-body p-0">
+        <table class="table table-dark mb-0 table-hover small">
+          <thead class="text-uppercase text-muted" style="font-size: 0.75rem;">
+          <tr>
+            <th class="ps-3">Fecha / Hora</th>
+            <th class="text-center">Densidad</th>
+            <th class="text-center">Temperatura</th>
+            <th class="pe-3">Observaciones en Planta</th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (item of history(); track item.density) {
+              <tr>
+                <td class="ps-3 font-monospace">{{ item.creationDate | date: "dd/MM/yyy HH:mm" }}</td>
+                <td class="text-center font-monospace text-info fw-bold">{{ item.density }}</td>
+                <td class="text-center font-monospace text-warning">{{ item.temperature }} °C</td>
+                <td class="pe-3 text-white">{{ item.notes }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>

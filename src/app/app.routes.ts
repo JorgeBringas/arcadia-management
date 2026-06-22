@@ -12,16 +12,16 @@ export const routes: Routes = [
   {
     path: 'batches/new',
     loadComponent: () =>
-      import('./components/batch/new/new-batch').then(
-        (m) => m.NewBatch,
+      import('./components/batch/new/batch-new/batch-new').then(
+        (m) => m.BatchNew,
       ),
   },
   {
-    path: 'batches/management',
+    path: 'batches/management/:id',
     loadComponent: () =>
-      import('./components/batch/management/management').then(
-        (m) => m.Management,      
+      import('./components/batch/management/batch-management/batch-management').then(
+        (m) => m.BatchManagement,
       ),
-  }, 
+  },
 ];
 

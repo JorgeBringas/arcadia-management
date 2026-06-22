@@ -83,8 +83,8 @@
               Volumen Total (Litros)
             </label>
             <input type="number" class="form-control bg-dark text-white border-secondary" autocomplete="off"
-              [formField]="batchForm.initialVolume">
-            @for (error of batchForm.initialVolume().errors(); track error) {
+              [formField]="batchForm.fermentationVolume">
+            @for (error of batchForm.fermentationVolume().errors(); track error) {
             <div class="form-text text-muted small error-text">{{ error.message }}</div>
             }
           </div>

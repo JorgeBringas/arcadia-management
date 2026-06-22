@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PrimaryPhase } from './primary-phase';
+import { FermentationPhase } from './fermentation-phase';
 
-describe('PrimaryPhase', () => {
-  let component: PrimaryPhase;
-  let fixture: ComponentFixture<PrimaryPhase>;
+describe('FermentationPhase', () => {
+  let component: FermentationPhase;
+  let fixture: ComponentFixture<FermentationPhase>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PrimaryPhase],
+      imports: [FermentationPhase],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PrimaryPhase);
+    fixture = TestBed.createComponent(FermentationPhase);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
